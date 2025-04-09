@@ -45,6 +45,9 @@ CORS(app, resources={r"/*": {"origins": "*", "send_wildcard": "False"}})
 login_manager = LoginManager()
 login_manager.init_app(app)
 
+if cfg.is_read_only:
+    app.logger.warning(f"{cfg.arm_config_path} is read-only! You won't be able to set the settings via UI.")
+
 # Set log level per arm.yml config
 app.logger.info(f"Setting log level to: {cfg.arm_config['LOGLEVEL']}")
 app.logger.setLevel(cfg.arm_config['LOGLEVEL'])
